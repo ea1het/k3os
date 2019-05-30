@@ -1,0 +1,44 @@
+ssh_authorized_keys:
+- ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB
+- github:ea1het
+
+write_files:
+- encoding: ""
+  content: |-
+    #!/bin/bash
+    echo hi
+  owner: root
+  path: /etc/rc.local
+  permissions: '0755'
+hostname: myhost
+run_cmd:
+- "echo hi && echo bye"
+boot_cmd:
+- "echo hi && echo bye"
+init_cmd:
+- "echo hi && echo bye"
+
+k3os:
+  data_sources:
+  - aws
+  - cdrom
+  modules:
+  - kvm
+  - nvme
+  sysctl:
+    kernel.printk: 4 4 1 7
+    kernel.kptr_restrict: 1
+  dns_nameservers:
+  - 8.8.8.8
+  - 1.1.1.1
+  ntp_servers:
+  - pool.ntp.org
+  password: rancher
+  server_url: https://controlplane:6443
+  token: TOKEN_VALUE
+  k3s_args:
+  - server
+  - "--disable-agent"
+  taints:
+  - key1=value1:NoSchedule
+  - key1=value1:NoExecute
